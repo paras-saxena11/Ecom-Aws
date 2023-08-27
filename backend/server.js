@@ -9,32 +9,30 @@ require("./connection");
 const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server, {
-  //cors: "http://localhost:3000",
-  cors: "https://warm-creponne-4c6353.netlify.app/",
+  cors: "*",
   methods: ["GET", "POST", "PATCH", "DELETE"],
 });
-const path = require("path");
+// const path = require("path");
 
-const _dirname = path.dirname("");
-const build_path = path.join(_dirname, "../frontend/build");
+// const _dirname = path.dirname("");
+// const build_path = path.join(_dirname, "../frontend/build");
 
-app.use(express.static(build_path));
+// app.use(express.static(build_path));
 
-app.get("/*", function (req, res) {
-  res.sendFile(path.join(__dirname, "../frontend/build/index.html")),
-    function (error) {
-      if (error) {
-        res.status(500).send(error);
-      }
-    };
-});
+// app.get("/*", function (req, res) {
+//   res.sendFile(path.join(__dirname, "../frontend/build/index.html")),
+//     function (error) {
+//       if (error) {
+//         res.status(500).send(error);
+//       }
+//     };
+// });
 
-const User = require("./models/User");
+// const User = require("./models/User");
 const userRoutes = require("./routes/userRoutes");
 const imageRoutes = require("./routes/imageRoutes");
 const productRoutes = require("./routes/productRoutes");
 const orderRoutes = require("./routes/orderRoutes");
-const exp = require("constants");
 
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
