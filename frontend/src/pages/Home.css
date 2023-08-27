@@ -32,3 +32,8 @@ img.card-img-top.product-preview-img {
   display: block;
   margin: 0 auto;
 }
+
+.last-products:hover {
+  transform: translateX(1);
+  transition: 0.3s ease-in-out;
+}

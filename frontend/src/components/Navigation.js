@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
 import { logout, resetNotifications } from "../features/userSlice";
 import "./Navigation.css";
-import Logo from "./Logo.png";
+import Logo from "../assets/Logo.png";
 
 function Navigation() {
   const user = useSelector((state) => state.user);

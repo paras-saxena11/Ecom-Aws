@@ -8,6 +8,7 @@ import axios from "../axios";
 import ProductPreview from "../components/ProductPreview";
 import { updateProducts } from "../features/productSlice";
 import { useDispatch, useSelector } from "react-redux";
+import Cover from "../assets/cover.png";
 
 function Home() {
   const dispatch = useDispatch();
@@ -19,15 +20,11 @@ function Home() {
   }, [dispatch]);
   return (
     <div>
-      <img
-        src="https://res.cloudinary.com/learn-code-10/image/upload/v1653947013/yqajnhqf7usk56zkwqi5.png"
-        className="img-fluid"
-        alt="SHOP NOW"
-      />
+      <img src={Cover} className="img-fluid" alt="SHOP NOW" />
       <div className="featured-products-container container mt-4">
-        <h2>Last products</h2>
+        <h2>Last Products</h2>
         {/* Last products preview */}
-        <div className="d-flex justify-content-center flex-wrap">
+        <div className="d-flex justify-content-center flex-wrap ">
           {lastProducts.map((product) => (
             <ProductPreview {...product} />
           ))}

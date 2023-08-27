@@ -89,7 +89,7 @@ function CartPage() {
                           }}
                         />
                       </td>
-                      <td>${item.price}</td>
+                      <td>₹{item.price}</td>
                       <td>
                         <span className="quantity-indicator">
                           <i
