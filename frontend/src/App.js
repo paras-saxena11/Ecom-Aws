@@ -20,10 +20,11 @@ import { addNotification } from "./features/userSlice";
 
 function App() {
   const user = useSelector((state) => state.user);
-  console.log(user);
+  // console.log(user);
   const dispatch = useDispatch();
   useEffect(() => {
-    const socket = io("https://ecombackend-3km3.onrender.com");
+    const socket = io("http://localhost:8080");
+    // const socket = io("https://ecombackend-3km3.onrender.com");
     socket.off("notification").on("notification", (msgObj, user_id) => {
       // logic for notification
       if (user_id === user._id) {
@@ -36,7 +37,7 @@ function App() {
         dispatch(addNotification(msgObj));
       }
     });
-  }, []);
+  });
   return (
     <div className="App">
       <BrowserRouter>

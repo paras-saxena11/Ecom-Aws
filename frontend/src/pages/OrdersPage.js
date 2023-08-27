@@ -22,7 +22,7 @@ function OrdersPage() {
         setLoading(false);
         console.log(e);
       });
-  }, []);
+  }, [setLoading, user._id]);
 
   if (loading) {
     return <Loading />;
@@ -50,7 +50,9 @@ function OrdersPage() {
               <td>{order._id}</td>
               <td>
                 <Badge
-                  bg={`${order.status == "processing" ? "warning" : "success"}`}
+                  bg={`${
+                    order.status === "processing" ? "warning" : "success"
+                  }`}
                   text="white"
                 >
                   {order.status}

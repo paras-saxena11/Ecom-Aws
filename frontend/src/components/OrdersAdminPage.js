@@ -116,6 +116,7 @@ function OrdersAdminPage() {
             <img
               src={order.pictures[0].url}
               style={{ maxWidth: 100, height: 100, objectFit: "cover" }}
+              alt="Here"
             />
             <p>
               <span>{order.count} x </span> {order.name}

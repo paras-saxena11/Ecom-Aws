@@ -17,37 +17,53 @@ function CheckoutForm() {
   const [address, setAddress] = useState("");
   const [paying, setPaying] = useState(false);
 
+  const secret_key =
+    "sk_test_51MM7AsSGjzXbWRQSnOHqDYfXJdZcMVeb0ZmkPkBHOnc2zkTBIyQfN5WM7N7ODBeyZisognqlloIWZlhuIfVox7mA009jg6XLAu";
+
   async function handlePay(e) {
     e.preventDefault();
     if (!stripe || !elements || user.cart.count <= 0) return;
     setPaying(true);
     const { client_secret } = await fetch(
-      "https://ecombackend-3km3.onrender.com",
+      // "http://localhost:8080/create-payment",
+      "https://ecombackend-3km3.onrender.com/create-payment",
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: "Bearer ",
+          Authorization: `Bearer ${secret_key}`,
         },
         body: JSON.stringify({ amount: user.cart.total }),
       }
     ).then((res) => res.json());
-    // console.log(client_secret);
-    const paymentM = stripe.createPaymentMethod({
+    if (client_secret === undefined) {
+      setPaying(false);
+      return;
+    }
+
+    // console.log("CLIENTSECRET", client_secret);
+
+    const paymentM = await stripe.createPaymentMethod({
       type: "card",
       card: elements.getElement(CardElement),
     });
+
+    // console.log("PAYMENTM:", paymentM);
+
     const { paymentIntent } = await stripe.confirmCardPayment(
       client_secret,
       paymentM
     );
     setPaying(false);
+
+    // console.log("PAYMENT INTENT", paymentIntent);
+
     if (paymentIntent || client_secret !== "") {
       createOrder({ userId: user._id, cart: user.cart, address, country }).then(
         (res) => {
           // console.log(isError);
           if (!isLoading && !isError) {
-            // setAlertMessage(`Payment ${paymentIntent.status}`);
+            setAlertMessage(`Payment ....`);
             setTimeout(() => {
               navigate("/orders");
             }, 3000);

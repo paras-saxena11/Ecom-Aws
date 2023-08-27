@@ -19,7 +19,9 @@ function CartPage() {
   const user = useSelector((state) => state.user);
   const products = useSelector((state) => state.products);
   const userCartObj = user.cart;
+
   let cart = products.filter((product) => userCartObj[product._id] != null);
+
   const [increaseCart] = useIncreaseCartProductMutation();
   const [decreaseCart] = useDecreaseCartProductMutation();
   const [removeFromCart, { isLoading }] = useRemoveFromCartMutation();
@@ -35,7 +37,7 @@ function CartPage() {
       <Row>
         <Col>
           <h1 className="pt-2 h3">Shopping cart</h1>
-          {cart.length == 0 ? (
+          {cart.length === 0 ? (
             <Alert variant="info">
               Shopping cart is empty. Add products to your cart
             </Alert>
@@ -61,7 +63,7 @@ function CartPage() {
                 <tbody>
                   {/* loop through cart products */}
                   {cart.map((item) => (
-                    <tr>
+                    <tr key={item.pictures[0].url}>
                       <td>&nbsp;</td>
                       <td>
                         {!isLoading && (
@@ -79,6 +81,7 @@ function CartPage() {
                         )}
                         <img
                           src={`${item.pictures[0].url}`}
+                          alt="here"
                           style={{
                             width: 100,
                             height: 100,

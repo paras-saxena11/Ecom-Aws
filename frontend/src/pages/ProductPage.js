@@ -49,6 +49,7 @@ function ProductPage() {
       className="product__carousel--image"
       src={`${picture.url}`}
       onDragStart={handleDragStart}
+      alt="carouseltag"
     />
   ));
 

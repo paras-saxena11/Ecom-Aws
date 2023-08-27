@@ -3,7 +3,9 @@ const cors = require("cors");
 const app = express();
 const http = require("http");
 require("dotenv").config();
-const stripe = require("stripe")(process.env.STRIPE_SECRET);
+const stripe = require("stripe")(
+  "sk_test_51MM7AsSGjzXbWRQSnOHqDYfXJdZcMVeb0ZmkPkBHOnc2zkTBIyQfN5WM7N7ODBeyZisognqlloIWZlhuIfVox7mA009jg6XLAu"
+);
 const PORT = 8080;
 require("./connection");
 const server = http.createServer(app);
@@ -12,21 +14,6 @@ const io = new Server(server, {
   cors: "*",
   methods: ["GET", "POST", "PATCH", "DELETE"],
 });
-// const path = require("path");
-
-// const _dirname = path.dirname("");
-// const build_path = path.join(_dirname, "../frontend/build");
-
-// app.use(express.static(build_path));
-
-// app.get("/*", function (req, res) {
-//   res.sendFile(path.join(__dirname, "../frontend/build/index.html")),
-//     function (error) {
-//       if (error) {
-//         res.status(500).send(error);
-//       }
-//     };
-// });
 
 // const User = require("./models/User");
 const userRoutes = require("./routes/userRoutes");
@@ -37,6 +24,7 @@ const orderRoutes = require("./routes/orderRoutes");
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
 app.use("/users", userRoutes);
 app.use("/products", productRoutes);
 app.use("/images", imageRoutes);
@@ -51,6 +39,9 @@ app.post("/create-payment", async (req, res) => {
       currency: "usd",
       payment_method_types: ["card"],
     });
+
+    // console.log(paymentIntent);
+
     res.status(200).json(paymentIntent);
   } catch (e) {
     console.log(e.message);

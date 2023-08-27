@@ -15,13 +15,20 @@ function DashboardProducts() {
     // logic here
     if (window.confirm("Are you sure?"))
       deletProduct({ product_id: id, user_id: user._id });
+    if (isSuccess) {
+      console.log("Deleted!");
+    }
   }
 
   function TableRow({ pictures, _id, name, price }) {
     return (
       <tr>
         <td>
-          <img src={pictures[0].url} className="dashboard-product-preview" />
+          <img
+            src={pictures[0].url}
+            className="dashboard-product-preview"
+            alt="here"
+          />
         </td>
         <td>{_id}</td>
         <td>{name}</td>

@@ -44,7 +44,9 @@ function Login() {
               />
             </Form.Group>
             <Form.Group>
-              <Button type="submit">Login</Button>
+              <Button type="submit" disabled={isLoading}>
+                Login
+              </Button>
               <p>
                 Don't have an account?<Link to="/signup">Create Account</Link>
               </p>

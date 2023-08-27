@@ -130,8 +130,8 @@ function NewProduct() {
               <div className="images-preview-container">
                 {images.map((image) => (
                   <div className="image-preview">
-                    <img src={image.url} />
-                    {imgToRemove != image.public_id && (
+                    <img src={image.url} alt=" here" />
+                    {imgToRemove !== image.public_id && (
                       <i
                         className="fa fa-times-circle"
                         onClick={() => handleRemoveImg(image)}
