@@ -16,10 +16,14 @@ function Home() {
 
   useEffect(() => {
     axios.get("/products").then(({ data }) => dispatch(updateProducts(data)));
-  }, []);
+  }, [dispatch]);
   return (
     <div>
-      <img src="https://res.cloudinary.com/learn-code-10/image/upload/v1653947013/yqajnhqf7usk56zkwqi5.png" />
+      <img
+        src="https://res.cloudinary.com/learn-code-10/image/upload/v1653947013/yqajnhqf7usk56zkwqi5.png"
+        className="img-fluid"
+        alt="SHOP NOW"
+      />
       <div className="featured-products-container container mt-4">
         <h2>Last products</h2>
         {/* Last products preview */}
@@ -41,12 +45,16 @@ function Home() {
           </Link>
         </div>
       </div>
-      <div className="sale__banner--container mt-4">
-        <img src="https://res.cloudinary.com/learn-code-10/image/upload/v1654093280/xkia6f13xxlk5xvvb5ed.png" />
+      <div className="mt-4">
+        <img
+          src="https://res.cloudinary.com/learn-code-10/image/upload/v1654093280/xkia6f13xxlk5xvvb5ed.png"
+          className="img-fluid"
+          alt="SHOP NOW"
+        />
       </div>
       <div className="recent-products-container container mt-4">
         <h2>Categories</h2>
-        <Row>
+        <Row className="my-4">
           {categories.map((category) => (
             <LinkContainer
               to={`/category/${category.name.toLocaleLowerCase()}`}
