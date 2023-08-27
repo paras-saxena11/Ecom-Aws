@@ -23,8 +23,8 @@ function App() {
   // console.log(user);
   const dispatch = useDispatch();
   useEffect(() => {
-    const socket = io("http://localhost:8080");
-    // const socket = io("https://ecombackend-3km3.onrender.com");
+    // const socket = io("http://localhost:8080");
+    const socket = io("https://ecombackend-3km3.onrender.com");
     socket.off("notification").on("notification", (msgObj, user_id) => {
       // logic for notification
       if (user_id === user._id) {
