@@ -97,21 +97,30 @@ router.get("/category/:category", async (req, res) => {
 // cart routes
 
 router.post("/add-to-cart", async (req, res) => {
-  const { userId, productId, price } = req.body;
+  const { userId, productId, price, product_count } = req.body;
 
   try {
     const user = await User.findById(userId);
     const userCart = user.cart;
     if (user.cart[productId]) {
-      userCart[productId] += 1;
+      userCart[productId] += Number(product_count);
     } else {
-      userCart[productId] = 1;
+      userCart[productId] = Number(product_count);
     }
-    userCart.count += 1;
-    userCart.total = Number(userCart.total) + Number(price);
+    if (!userCart.total) {
+      userCart.total = 0;
+    }
+    if (!userCart.count) {
+      userCart.count = 0;
+    }
+    userCart.count += Number(product_count);
+    userCart.total =
+      Number(userCart.total) + Number(price) * Number(product_count);
+
     user.cart = userCart;
     user.markModified("cart");
     await user.save();
+
     res.status(200).json(user);
   } catch (e) {
     res.status(400).send(e.message);
@@ -119,13 +128,20 @@ router.post("/add-to-cart", async (req, res) => {
 });
 
 router.post("/increase-cart", async (req, res) => {
-  const { userId, productId, price } = req.body;
+  const { userId, productId, price, product_count } = req.body;
   try {
     const user = await User.findById(userId);
     const userCart = user.cart;
-    userCart.total += Number(price);
-    userCart.count += 1;
-    userCart[productId] += 1;
+    if (userCart[productId]) {
+      userCart[productId] += Number(product_count);
+    } else {
+      userCart[productId] = Number(product_count);
+    }
+    userCart.count += Number(product_count);
+    userCart.total = Number(
+      Number(userCart.total) + Number(price) * Number(product_count)
+    );
+
     user.cart = userCart;
     user.markModified("cart");
     await user.save();
@@ -136,13 +152,22 @@ router.post("/increase-cart", async (req, res) => {
 });
 
 router.post("/decrease-cart", async (req, res) => {
-  const { userId, productId, price } = req.body;
+  const { userId, productId, price, product_count } = req.body;
   try {
     const user = await User.findById(userId);
     const userCart = user.cart;
-    userCart.total -= Number(price);
-    userCart.count -= 1;
-    userCart[productId] -= 1;
+
+    if (userCart[productId] && userCart[productId] > Number(product_count)) {
+      userCart[productId] -= Number(product_count);
+    } else {
+      delete userCart[productId];
+    }
+    // Update the total and count based on the product_count
+    userCart.count -= Number(product_count);
+    userCart.total = Number(
+      Number(userCart.total) - Number(price) * Number(product_count)
+    );
+
     user.cart = userCart;
     user.markModified("cart");
     await user.save();

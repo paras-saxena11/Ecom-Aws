@@ -8,7 +8,7 @@ import {
   Col,
   Badge,
   ButtonGroup,
-  Form,
+  // Form,
   Button,
 } from "react-bootstrap";
 import { useSelector } from "react-redux";
@@ -23,6 +23,7 @@ import ToastMessage from "../components/ToastMessage";
 function ProductPage() {
   const { id } = useParams();
   const user = useSelector((state) => state.user);
+  const [numberofProducts, setNumberofProducts] = useState(0);
   const [product, setProduct] = useState(null);
   const [similar, setSimilar] = useState(null);
   const [addToCart, { isSuccess }] = useAddToCartMutation();
@@ -83,20 +84,18 @@ function ProductPage() {
           </p>
           {user && !user.isAdmin && (
             <ButtonGroup style={{ width: "90%" }}>
-              <Form.Select
-                size="lg"
-                style={{ width: "40%", borderRadius: "0" }}
-              >
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-              </Form.Select>
+              <input
+                type="Number"
+                placeholder="Add Products"
+                value={numberofProducts}
+                min={1}
+                onChange={(e) => setNumberofProducts(e.target.value)}
+              />
               <Button
                 size="lg"
                 onClick={() =>
                   addToCart({
+                    product_count: numberofProducts,
                     userId: user._id,
                     productId: id,
                     price: product.price,

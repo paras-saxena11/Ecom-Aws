@@ -26,12 +26,6 @@ function CartPage() {
   const [decreaseCart] = useDecreaseCartProductMutation();
   const [removeFromCart, { isLoading }] = useRemoveFromCartMutation();
 
-  function handleDecrease(product) {
-    const quantity = user.cart.count;
-    if (quantity <= 0) return alert("Can't proceed");
-    decreaseCart(product);
-  }
-
   return (
     <Container style={{ minHeight: "95vh" }} className="cart-container">
       <Row>
@@ -95,10 +89,11 @@ function CartPage() {
                           <i
                             className="fa fa-minus-circle"
                             onClick={() =>
-                              handleDecrease({
+                              decreaseCart({
                                 productId: item._id,
                                 price: item.price,
                                 userId: user._id,
+                                product_count: 1,
                               })
                             }
                           ></i>
@@ -110,6 +105,7 @@ function CartPage() {
                                 productId: item._id,
                                 price: item.price,
                                 userId: user._id,
+                                product_count: 1,
                               })
                             }
                           ></i>
