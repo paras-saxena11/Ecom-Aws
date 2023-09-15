@@ -9,6 +9,7 @@ import ProductPreview from "../components/ProductPreview";
 import { updateProducts } from "../features/productSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Cover from "../assets/cover.png";
+import Footer from "../components/Footer";
 
 function Home() {
   const dispatch = useDispatch();
@@ -23,7 +24,6 @@ function Home() {
       <img src={Cover} className="img-fluid" alt="SHOP NOW" />
       <div className="featured-products-container container mt-4">
         <h2>Last Products</h2>
-        {/* Last products preview */}
         <div className="d-flex justify-content-center flex-wrap ">
           {lastProducts.map((product) => (
             <ProductPreview {...product} />
@@ -71,6 +71,7 @@ function Home() {
           ))}
         </Row>
       </div>
+      <Footer />
     </div>
   );
 }

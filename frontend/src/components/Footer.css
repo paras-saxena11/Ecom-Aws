@@ -1,0 +1,50 @@
+.Footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+}
+.Links {
+  display: flex;
+  border-top: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  width: 70%;
+  height: 50px;
+  align-items: center;
+  font-size: larger;
+  justify-content: space-around;
+}
+.Links > span:hover {
+  cursor: pointer;
+  /* color: #de00a5; */
+  color: rgb(33, 150, 243);
+}
+.social-icons {
+  font-size: 2.4rem;
+  width: 40%;
+  margin: 1rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.social-icons > * {
+  color: white;
+}
+.social-icons > *:hover {
+  cursor: pointer;
+  color: rgb(33, 150, 243);
+  /* color: #de00a5; */
+}
+@media screen and (max-width: 720px) {
+  .Links {
+    font-size: 20px;
+    border-top: 0px solid #fff;
+    border-bottom: 0px solid #fff;
+    width: 70%;
+    height: 150px;
+    flex-direction: column;
+  }
+}
