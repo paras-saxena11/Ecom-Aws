@@ -36,31 +36,23 @@ function CheckoutForm() {
         body: JSON.stringify({ amount: user.cart.total }),
       }
     ).then((res) => res.json());
+
     if (client_secret === undefined) {
       setPaying(false);
       return;
     }
 
     // console.log("CLIENTSECRET", client_secret);
-
-    const paymentM = await stripe.createPaymentMethod({
-      type: "card",
-      card: elements.getElement(CardElement),
+    const res = await stripe.confirmCardPayment(client_secret, {
+      payment_method: {
+        card: elements.getElement(CardElement),
+      },
     });
-
-    // console.log("PAYMENTM:", paymentM);
-
-    const { paymentIntent } = await stripe.confirmCardPayment(
-      client_secret,
-      paymentM
-    );
+    console.log(res);
     setPaying(false);
-
-    // console.log("PAYMENT INTENT", paymentIntent);
-
-    if (paymentIntent || client_secret !== "") {
+    if (!res.error) {
       createOrder({ userId: user._id, cart: user.cart, address, country }).then(
-        (res) => {
+        () => {
           // console.log(isError);
           if (!isLoading && !isError) {
             setAlertMessage(`Payment ....`);
@@ -70,6 +62,11 @@ function CheckoutForm() {
           }
         }
       );
+    } else {
+      console.error("Payment error:", res.error.message);
+      setTimeout(() => {
+        navigate("/");
+      }, 3000);
     }
   }
 
